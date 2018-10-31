@@ -1,0 +1,2 @@
+# ScalaStudyNotes
+Self study notes
