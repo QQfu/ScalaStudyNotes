@@ -1,5 +1,7 @@
+import notes._
+
 object ScalaStudyNotes {
   def main(args: Array[String]){
-    println("He He He")
+    new BasicKnowledge().loopExample()
   }
 }
