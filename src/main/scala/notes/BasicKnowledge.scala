@@ -86,4 +86,106 @@ class BasicKnowledge {
     println()
     println("i = " + i)
   }
+
+  def enumerationExample():Unit = {
+    //Scala的Enumeration需要继承创建
+    object WeekDay1 extends Enumeration {
+      //Enumeration中，Value既是一个type也是一个method
+      type WeekDay1 = Value    //建立WeekDay1到Value的alias
+      val Monday: WeekDay1.Value = Value("The first day.")  //调用Value方法建立一个枚举变量
+      val Tuesday: WeekDay1.Value = Value("The second day.")
+      val Wednesday: WeekDay1.Value = Value("The third day.")
+      val Thursday: WeekDay1.Value = Value("The forth day.")
+      val Friday: WeekDay1.Value = Value("The fifth day.")
+      val Saturday: WeekDay1.Value = Value("The sixth day.")
+      val Sunday: WeekDay1.Value = Value("The seventh day.")
+    }
+
+    for (day <- WeekDay1.values) println(s"${day.id}\t$day")
+
+    //Enumeration也可以直接省略Value的参数用变量名代替说明。
+    object WeekDay2 extends Enumeration {
+      type WeekDay2 = Value
+      val Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday = Value
+    }
+
+    WeekDay2.values foreach println
+  }
+
+  def stringFormatExample():Unit = {
+    //Scala可以对字符串做替换操作和格式化操作，在字符串前加s做替换操作，加f做格式化操作。
+    val v1:Int = 5
+    val f1:Float = 3.2f
+    val s1:String = "Baby"
+    //Output = "Hello, Baby!"
+    println(s"Hello, $s1!") //用$做替换锚点，后接{}内容被替换，如果仅为一个变量可以省略{}。
+    //Output = "I want $3.2!"
+    println(s"I want $$$f1!") //用$$表示原生的dollar符。
+    //Output = "I got 3.20, but I want 05."
+    println(f"I got $f1%.2f, but I want $v1%02d.") //用%做格式化锚点，小数点前后的数字表示前后精确的位数。
+    //Output = "The percent is 5%."
+    println(f"The percent is $v1%%.") //用%%表示原生的百分号符。
+    //Output = "Baby, 05 is not what I want!"
+    println("%s, %02d is not what I want!".format(s1,v1)) //也可以用format函数来做格式化，此时%为格式化锚点和替换锚点。
+  }
+
+  def traitExample():Unit = {
+    //Scala没有Interface，Scale用Trait来实现Interface的功能
+    trait BaseInterface {
+      def alert(msg:String):Unit
+    }
+    class BaseClass1 extends BaseInterface {
+      def alert(msg:String):Unit = {
+        println(s"Alert: $msg")
+      }
+
+      def info(infomsg:String):Unit = {
+        println(s"Info: $infomsg")
+      }
+    }
+    new BaseClass1().alert("This is a message.")
+
+    //像Java一样，Scala支持同时继承类和实现接口。
+    trait BaseInterface2 {
+      def alert2(msg:String):Unit
+    }
+
+    class  BaseClass2 extends BaseClass1 with BaseInterface2 {
+      override def alert(msg: String): Unit = {
+        println(s"Alert in BaseClass2: $msg")
+      }
+
+      override def alert2(msg: String): Unit = {
+        println(s"Alert2: $msg")
+      }
+    }
+
+    val exampleClass = new BaseClass2()
+    //alert被重载了，此时会用到Alert in BaseClass2.
+    exampleClass.alert("Message.")
+    //alert2继承自BaseInterface2
+    exampleClass.alert2("Message2.")
+    //info继承自父类BaseClass1
+    exampleClass.info("Information message.")
+
+    //Scala支持接口的多重继承
+    class multiClass extends BaseInterface with BaseInterface2 {
+      def alert(msg: String): Unit = {
+        println(s"From first trait: $msg")
+      }
+
+      def alert2(msg: String): Unit = {
+        println(s"From second trait: $msg")
+      }
+
+      def alert3(msg:String):Unit = {
+        println(s"From self class: $msg")
+      }
+    }
+
+    val multiClassExample = new multiClass()
+    multiClassExample.alert("Message1.")
+    multiClassExample.alert2("Message2.")
+    multiClassExample.alert3("Message3.")
+  }
 }
