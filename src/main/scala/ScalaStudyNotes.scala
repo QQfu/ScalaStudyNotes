@@ -2,6 +2,6 @@ import notes._
 
 object ScalaStudyNotes {
   def main(args: Array[String]){
-    new ImplicitNotes().basicExample()
+    new ImplicitNotes().stringContextExample()
   }
 }
