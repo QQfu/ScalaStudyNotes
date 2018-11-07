@@ -91,14 +91,14 @@ class ImplicitNotes {
     //既，s"a $thing" = StringContext("a ", " ").s(thing)。由此可以自定义变量替换规则
     object MyContext {
       implicit final class MyStringContext(val sc: StringContext) {
-        def couple(v: Any*): String = sc.s(v).mkString + " " + sc.s(v).mkString
+        def ps(v: Any*): String = sc.parts + v.toString()
       }
     }
 
     import MyContext._
     val s1 = "Dog"
     val s2 = "He"
-    println(couple"$s1")
-    println(couple"$s2")
+    println(ps"Dog $s1")
+    println(ps"He $s2")
   }
 }
