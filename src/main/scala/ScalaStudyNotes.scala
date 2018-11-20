@@ -2,6 +2,6 @@ import notes._
 
 object ScalaStudyNotes {
   def main(args: Array[String]){
-    new OOPNotes().universalTraitExample()
+    new OOPNotes().myFractionExample()
   }
 }
