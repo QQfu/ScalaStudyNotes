@@ -21,8 +21,17 @@ class Roll(val number: Int) extends AnyVal with Filter7 {
   }
 }
 
-//Scala可以自定义一元运算符,MyFraction自定义了分数类和四则运算，以及取反运算。
+//Scala可以自定义一元运算符和多元运算符,MyFraction自定义了分数类和四则运算，以及取反运算。
 case class MyFraction(numerator:Int, denominator:Int) {
+
+  //可以定义require方法来做输入参数验证，此处调用validate方法做验证
+  require(validate(numerator,denominator),s"Numerator or Denominator is zero. $toString")
+
+  //validate方法验证输入的分子分母不能为零。[数学上分子可以为零。]
+  protected def validate(i: Int, j: Int):Boolean = {
+    if (i == 0 || j == 0) false
+    else true
+  }
 
   //取两个数的最大公约数
   def getMaxCommonDiv(a:Int, b:Int):Int = {
@@ -132,5 +141,12 @@ class OOPNotes {
     println(s"f1:$f1 / f2:$f2 = ${f1 / f2}")
     println(s"f2:$f2 / f1:$f1 = ${f2 / f1}")
     println(s"f6:$f6 * f5:$f4 = ${f6 * f4}")
+
+    try {
+      println(MyFraction(0,2))
+    } catch {
+      case e: java.lang.IllegalArgumentException => println(e.getMessage)
+    }
+
   }
 }
